@@ -94,7 +94,6 @@ DATABASE = 2
 DATABASES = {
     'default' : {
         'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {'charset': 'utf8mb4'},
         'NAME' : 'youtube_clone_django',
         'USER' : 'root',
         'HOST' : 'localhost',
