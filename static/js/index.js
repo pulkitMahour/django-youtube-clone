@@ -56,12 +56,15 @@ function addlike(videopk,likecount) {
 
 
 function change() {
-	let changer = document.getElementById('side-menu');
-    if (changer.style.transform==="none"){
-        changer.style.transform="translate3d(0, 0, 0)";
+	let changer = document.getElementById('sidebarMenu');
+	let video_distance = document.getElementById('visec')
+    if (changer.style.width==="14%"){
+        changer.style.width="3.4%";
+        video_distance.style.marginLeft="9%";
     }
     else{
-        changer.style.transform="none";
+        changer.style.width="14%";
+        video_distance.style.marginLeft="13.8%";
     }
 }
 

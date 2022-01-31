@@ -3,18 +3,17 @@ body{
 }
 
 .youtubesearch{
-    display: flex;
-    flex-direction: row;
     justify-content: center;
     align-items: center;
     margin-left: 17%;
-    margin-right: 15%;
+    margin-right: 16%;
+    width: 41%;
 }
 
 .youtubeLogo{
     height: 30px;
     margin: 7px;
-    margin-top: 0.8%;
+    margin-top: 15px;
     cursor: pointer;
 }
 
@@ -40,24 +39,18 @@ body{
 }
 
 .videoSection{
-    display: flex;
-    flex-wrap: wrap;
-    flex: 1;
-    margin-left: 250px;
+    margin-left: 13.8%;
+    margin-top: 0.9%;
     width: 85%;
 }
 
 .youtubeVideo{
-    display: flex;
-    flex-direction: column;
-    height: fit-content;
-    width: 352px;
-    padding: 5px;
+    height: auto;
 }
 
 .videoThumbnail{
     height: auto;
-    width: 339px;
+    width: 100%;
     cursor: pointer;
 }
 
@@ -102,7 +95,7 @@ body{
 }
 
 .navbar-nav {
-    width: 99%;
+    width: 100%;
     text-align: center;
     float: none;
     display: flex;
@@ -114,6 +107,39 @@ body{
 .pull-right{
     margin: 14px 14px;
 }
+
+@media (min-width: 66px) {
+    .navbar-nav{
+        margin: 0px;
+    }
+
+}
+
+@media (max-width: 1000px){
+    .youtubesearch{
+        margin-left: 8.5%;
+        margin-right: 7.5%;
+    }
+}
+
+@media (max-width: 600px){
+    .youtubesearch{
+        margin-left: 3.5%;
+        margin-right: 3.5%;
+    }
+
+    .pull-right{
+        margin-left: 2%;
+        margin-right: 1%;
+    }
+}
+
+@media (min-width: 766px){
+    .youtubeVideo{
+        height: 330px;
+    }
+}
+
 
 a.titleLink:visited, a.titleLink:link{text-decoration: none; color: black}
 a.titleLink:hover, a.titleLink:active{text-decoration: underline; color: black}
@@ -133,15 +159,16 @@ h5{
   top: 59px;
   bottom: 0;
   left: 0;
-  width: 240px;
+  width: 14%;
   z-index: 600;
 }
 
-@media (max-width: 991.98px) {
+@media (max-width: 900px) {
   .sidebar {
-    width: 100%;
+    width: 55px;
   }
 }
+
 .sidebar .active {
   border-radius: 5px;
   box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
@@ -185,3 +212,67 @@ h5{
     top: 30vh;
 }
 
+.signup{
+    background: white;
+    border: 1px solid lightgray;
+    border-radius: 7px;
+    width: 430px;
+    margin: 30px auto;
+    height: 860px;
+    box-shadow: 10px 10px 25px #888888;
+}
+
+.signup-h2{
+    font-size: 25px;
+    margin-bottom: 18px;
+    margin-top: 15px;
+    text-align: center;
+    font-family: roboto;
+}
+
+.signup-h5{
+    font-size: 15px;
+    font-family: roboto;
+    text-align-last: center;
+}
+
+.signup-form{
+    margin-bottom: 10px;
+    padding: 30px;
+}
+
+.signup_input{
+    height: 50px;
+    margin-bottom: 5%;
+}
+
+.signup_label{
+    font-family: roboto;
+    font-weight: lighter;
+}
+
+.signup-btn{
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 4px;
+    height: 45px;
+    background-color: #1a73e8
+}
+
+.login-input{
+    height: 50px;
+    margin-bottom: 5%
+}
+
+
+@media (max-width: 400px){
+    .popup-content{
+        width: 100%;
+        top: 25vh;
+    }
+
+    .signup{
+        width: 330px;
+        height: 816px;
+    }
+}
