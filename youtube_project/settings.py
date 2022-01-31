@@ -102,9 +102,11 @@ DATABASES = {
         'PORT' : '3306'
     }
 }
-DATABASES['default'] = dj_database_url.config(
-    default='mysql://root:tjwff7xdxc@127.0.0.1:3306/youtube_clone_django',
-)
+# DATABASES['default'] = dj_database_url.config(
+#     default='mysql://root:tjwff7xdxc@127.0.0.1:3306/youtube_clone_django',
+# )
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 
 
 # Password validation
