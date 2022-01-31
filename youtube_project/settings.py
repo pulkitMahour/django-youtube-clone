@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -101,6 +102,9 @@ DATABASES = {
         'PORT' : '3306'
     }
 }
+DATABASES['default'] = dj_database_url.config(
+    default='mysql://root:tjwff7xdxc@127.0.0.1:3306/youtube_clone_django',
+)
 
 
 # Password validation
