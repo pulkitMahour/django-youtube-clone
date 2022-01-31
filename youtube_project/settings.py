@@ -96,7 +96,7 @@ DATABASES = {
         'OPTIONS': {'charset': 'utf8mb4'},
         'NAME' : 'youtube_clone_django',
         'USER' : 'root',
-        'HOST' : '127.0.0.1',
+        'HOST' : 'localhost',
         'PASSWORD' : 'tjwff7xdxc',
         'PORT' : '3306'
     }
