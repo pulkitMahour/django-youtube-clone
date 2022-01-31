@@ -1,0 +1,278 @@
+body{
+    background-color: #f9f9f9
+}
+
+.youtubesearch{
+    justify-content: center;
+    align-items: center;
+    margin-left: 17%;
+    margin-right: 16%;
+    width: 41%;
+}
+
+.youtubeLogo{
+    height: 30px;
+    margin: 7px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.SiderIcon{
+    width:  27px;
+    height: 27px;
+    background-color: white;
+    outline: none;
+    cursor: pointer;
+    margin-top: 2px;
+    margin-right: 25px;
+}
+
+.SiderIcon:hover{
+    background-color: #e5e5e5ab
+}
+
+.youtubeSidebar__hr{
+    height: 1px;
+    border-top: 1px solid rgba(128, 128, 128, 0.397);
+    width: 99%;
+    margin: 1px;
+}
+
+.videoSection{
+    margin-left: 13.8%;
+    margin-top: 0.9%;
+    width: 85%;
+}
+
+.youtubeVideo{
+    height: auto;
+}
+
+.videoThumbnail{
+    height: auto;
+    width: 100%;
+    cursor: pointer;
+}
+
+.videoDetails{
+    display: flex;
+    flex-direction: row;
+}
+
+.channelThumbnail{
+    border-radius: 200px;
+    height: 40px;
+    margin-top: 15px;
+}
+
+.videoDetailsText{
+    display: flex;
+    flex-direction: column;
+}
+
+.videoTitle{
+    font-size: 15px;
+    font-family: arial;
+    color: black;
+    font-weight: 500;
+    margin: 10px;
+    margin-top: 12px;
+    margin-bottom: 0;
+    margin-left: 10px;
+}
+
+.channelName, .videoViews{
+    font-size: 13px;
+    font-family: arial;
+    color: #606060;
+    font-weight: 400;
+    margin-top: 2px;
+    margin-left: 10px;
+}
+
+.videoViews{
+    margin-top: -12px;
+}
+
+.navbar-nav {
+    width: 100%;
+    text-align: center;
+    float: none;
+    display: flex;
+    background: white;
+    height: 58px;
+    position: fixed;
+}
+
+.pull-right{
+    margin: 14px 14px;
+}
+
+@media (min-width: 66px) {
+    .navbar-nav{
+        margin: 0px;
+    }
+
+}
+
+@media (max-width: 1000px){
+    .youtubesearch{
+        margin-left: 8.5%;
+        margin-right: 7.5%;
+    }
+}
+
+@media (max-width: 600px){
+    .youtubesearch{
+        margin-left: 3.5%;
+        margin-right: 3.5%;
+    }
+
+    .pull-right{
+        margin-left: 2%;
+        margin-right: 1%;
+    }
+}
+
+@media (min-width: 766px){
+    .youtubeVideo{
+        height: 330px;
+    }
+}
+
+
+a.titleLink:visited, a.titleLink:link{text-decoration: none; color: black}
+a.titleLink:hover, a.titleLink:active{text-decoration: underline; color: black}
+a.channelNameLink:visited, a.channelNameLink:link{text-decoration: none; color: #606060;}
+a.channelNameLink:hover, a.channelNameLink:active{text-decoration: underline; color: #606060}
+
+h5{
+    color: #000000;
+    font-weight: normal;
+}
+
+
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 59px;
+  bottom: 0;
+  left: 0;
+  width: 14%;
+  z-index: 600;
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    width: 55px;
+  }
+}
+
+.sidebar .active {
+  border-radius: 5px;
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+}
+.list-group-item{
+    border: none;
+    display: flex;
+    flex-direction: row;
+}
+
+
+.hideContent {
+    overflow: hidden;
+    line-height: 2rem;
+    height: 10em;
+}
+
+.showContent {
+    line-height: 2rem;
+    height: auto;
+}
+
+.show-more {
+    padding: 10px 0;
+}
+
+#popup-1 {
+    display: none;
+    background-color: rgba(0,0,0,0.5);
+    position: fixed;
+    height: 100%;
+    width: 100%;
+}
+
+.popup-content {
+    position: relative;
+    padding: 20px;
+    margin: 0 auto;
+    background-color: white;
+    width: 500px;
+    top: 30vh;
+}
+
+.signup{
+    background: white;
+    border: 1px solid lightgray;
+    border-radius: 7px;
+    width: 430px;
+    margin: 30px auto;
+    height: 860px;
+    box-shadow: 10px 10px 25px #888888;
+}
+
+.signup-h2{
+    font-size: 25px;
+    margin-bottom: 18px;
+    margin-top: 15px;
+    text-align: center;
+    font-family: roboto;
+}
+
+.signup-h5{
+    font-size: 15px;
+    font-family: roboto;
+    text-align-last: center;
+}
+
+.signup-form{
+    margin-bottom: 10px;
+    padding: 30px;
+}
+
+.signup_input{
+    height: 50px;
+    margin-bottom: 5%;
+}
+
+.signup_label{
+    font-family: roboto;
+    font-weight: lighter;
+}
+
+.signup-btn{
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 4px;
+    height: 45px;
+    background-color: #1a73e8
+}
+
+.login-input{
+    height: 50px;
+    margin-bottom: 5%
+}
+
+
+@media (max-width: 400px){
+    .popup-content{
+        width: 100%;
+        top: 25vh;
+    }
+
+    .signup{
+        width: 330px;
+        height: 816px;
+    }
+}

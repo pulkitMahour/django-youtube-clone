@@ -1,0 +1,41 @@
+{% extends "youtube_app/base.html" %}
+{% block body_block %}
+<div>
+    {% if messages %} {% for msg in messages %}
+    <div class="alert alert-{{msg.tags}}" role="alert">{{msg}}</div>
+
+    {% endfor %} {% endif %}
+    <div class="login-form signup">
+      <h2 class="signup-h2">Sign Up</h2>
+      <h5 class="signup-h5">Create your YouTube Account</h5>
+      <form method="POST" action="" enctype="multipart/form-data" class="signup-form">
+        {% csrf_token %}
+        <div class="form-group">
+          <input name="username" type="text" class="form-control me-2 signup_input" placeholder="Username" required="required">
+
+          <input name="first_name" type="text" class="form-control me-2 signup_input" placeholder="First Name" required="required">
+
+          <input name="last_name" type="text" class="form-control me-2 signup_input" placeholder="Last Name">
+
+          <input name="email" type="email" class="form-control me-2 signup_input" placeholder="Email address" required="required">
+
+          <input name="password" type="password" class="form-control me-2 signup_input" placeholder="Password" required="required">
+
+          <input name="cpassword" type="password" class="form-control me-2 signup_input" placeholder="Confirm Password" required="required">
+
+          <input name="age" type="age" class="form-control me-2 signup_input" placeholder="Age" required="required">
+
+          <label for="pp" class="signup_label">Profile Photo</label>
+          <input name="profile_photo" type="file" id="pp" class="form-control me-2 signup_input" placeholder="Profile Photo" style="margin-bottom: 4%">
+
+          <label for="pp" class="signup_label">Cover Photo</label>
+          <input name="cover_photo" type="file" id="pp" class="form-control me-2signup_input" placeholder="Cover Photo" style="margin-bottom: 4%">
+
+        </div>
+        <div class="form-group" style="margin-bottom: 0; margin-top: 8%">
+          <button type="submit" class="btn btn-primary btn-block signup-btn">Sign Up</button>
+        </div>
+      </form>
+    </div>
+</div>
+{% endblock %}

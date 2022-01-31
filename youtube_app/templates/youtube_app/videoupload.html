@@ -1,0 +1,48 @@
+{% extends "youtube_app/base.html" %}
+{% block body_block %}
+<div class="videoSection">
+    {% if uploaded == True %}
+        {% for v in videos %}
+        <a href="{% url 'video' v.id %}">
+            <div class= youtubeVideo >
+                <img class= videoThumbnail src ="{{v.video_thumbnail.url}}">
+                <div class= videoDetails >
+                    <img class= channelThumbnail src="{{v..channel_thumbnail.profile_photo.url}}">
+                    <div class= videoDetailsText >
+                        <p class= videoTitle >{{v.video_title}}</p>
+                        <p class= channelName >{{v.user.get_full_name}}</p>
+                    </div>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    {% else %}
+</div>
+<div class="login-form signup" style="height: 630px;">
+    <h2 class="signup-h2">Studios</h2>
+    <h5 class="signup-h5">Upload Your Video</h5>
+    
+    <form method="POST" action="" enctype="multipart/form-data" class="signup-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <input name="videoTitle" type="text" class="form-control me-2 signup_input" placeholder="Video Title" required="required">
+
+            <label class="signup-label" for="videos">Choose Video</label>
+            <input name="video" type="file" id="videos" class="form-control me-2 signup_input" placeholder="Video" required="required" style="margin-bottom: 3%">
+
+            <label class="signup-label" for="thumbnails">Choose Video Thumbnail</label>
+            <input name="thumbnail" type="file" id="thumbnails" class="form-control me-2 signup_input" placeholder="Video Thumbnail" required="required">
+
+            <textarea class="form-control me-2" rows="5" name="description" placeholder="Video Description"></textarea>
+
+        </div>
+        <div class="form-group" style="margin-bottom: 0; margin-top: 10%">
+            <button type="submit" class="btn btn-primary btn-block signup-btn">Upload</button>
+        </div>
+    </form>
+    {% endif %}
+{% endblock %}
+
+
+
+
