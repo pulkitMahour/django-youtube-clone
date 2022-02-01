@@ -78,29 +78,24 @@ WSGI_APPLICATION = 'youtube_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASE = 2
 
-# if DEBUG and (DATABASE == 1):
-#     print("\n\n\n","sqlite3","\n\n\n")
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-# elif DEBUG and (DATABASE == 2):
-#     print("\n\n\n","mysql","\n\n\n")
 # DATABASES = {
-#     'default' : {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME' : 'youtube_clone_django',
-#         'USER' : 'root',
-#         'HOST' : 'localhost',
-#         'PASSWORD' : 'tjwff7xdxc',
-#         'PORT' : '3306'
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
+DATABASES = {
+    'default' : {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME' : 'youtube_clone_django',
+        'USER' : 'root',
+        'HOST' : 'localhost',
+        'PASSWORD' : 'tjwff7xdxc',
+        'PORT' : '3306'
+    }
+}
 # DATABASES['default'] = dj_database_url.config(
 #     default='mysql://root:tjwff7xdxc@127.0.0.1:3306/youtube_clone_django',
 # )
