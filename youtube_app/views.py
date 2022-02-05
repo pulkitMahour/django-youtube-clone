@@ -10,15 +10,27 @@ import json
 import base64
 
 from django.contrib.auth.models import User
-from . models import UserProfileInfo,Video,Comment,Like,VideoViews
+from . models import UserProfileInfo,Video,Comment,Like,VideoViews,Subscription
 from .forms import UserForms,UserProfileInfoForm
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .serializers import LikeSerializers,CommentSerializers,SubscriptionSerializers
+
 
 # Create your views here.
 
 def base(request):
 	Allvideo = Video.objects.all()
 	Allviews = VideoViews.objects.all()
-	context = {'allvideos':Allvideo, 'allviews':Allviews}
+	
+	if str(request.user) != 'AnonymousUser':
+		user_subs = Subscription.objects.filter(subscribers=request.user)
+		profile = UserProfileInfo.objects.all()
+		
+		context = {'allvideos':Allvideo, 'allviews':Allviews, 'subs_chnl':user_subs, 'chnl_pic':profile}
+	else:
+		context = {'allvideos':Allvideo, 'allviews':Allviews}
 
 	return render(request,'youtube_app/defaultvideo.html',context)
 
@@ -97,32 +109,57 @@ def videoupload(request):
 
 	return render(request,'youtube_app/videoupload.html',context)
 
-def your_channel(request):
-	user_video = Video.objects.filter(user=request.user)
-	Allviews = VideoViews.objects.all()
-	context = {'allvideos':user_video, 'allviews':Allviews}
-	return render(request,'youtube_app/defaultvideo.html',context)
-
 def all_channel(request,pk):
-	video = Video.objects.get(pk=pk)
-	owner = video.user
-	
-	photo = UserProfileInfo.objects.get(user__username=owner)
-	if photo.cover_photo != None:
+	owner_videos = Video.objects.filter(user=pk)
+	Allviews = VideoViews.objects.all()
+	photo = UserProfileInfo.objects.get(user=pk)
+
+	if str(request.user) != 'AnonymousUser':
+		user_subs = Subscription.objects.filter(subscribers=request.user)
+		profile = UserProfileInfo.objects.all()
+
+	else:
+		user_subs = None
+		profile = None
+
+	if photo.cover_photo:
 		coverphoto = photo.cover_photo
 	else:
 		coverphoto = None
 
-	owner_videos = Video.objects.filter(user=owner)
-	Allviews = VideoViews.objects.all()
-	context = {'allvideos':owner_videos, 'allviews':Allviews, 'cover_photo':coverphoto, 'profile_photo':photo.profile_photo, 'full_name':owner.get_full_name()}
+	chnl_subs = Subscription.objects.filter(channel_owner=pk)
+	print("\n\n\n",chnl_subs,pk,"\n\n\n")
+
+	context = {'allvideos':owner_videos, 'allviews':Allviews, 'cover_photo':coverphoto, 'profile_photo':photo.profile_photo, 'full_name':photo, 'subs_chnl':user_subs, 'chnl_pic':profile, 'chnl_subs':chnl_subs}
 
 	return render(request,'youtube_app/channel.html',context)
+
+@login_required(login_url='/login')
+def likevideo_page(request):
+	like_video = Like.objects.filter(liker=request.user)
+	Allviews = VideoViews.objects.all()
+	user_subs = Subscription.objects.filter(subscribers=request.user)
+	profile = UserProfileInfo.objects.all()
+
+	context = {"video":like_video, 'allviews':Allviews, 'subs_chnl':user_subs, 'chnl_pic':profile, "type":"liked"}
+	return render(request,'youtube_app/like_and_history.html',context)
+
+@login_required(login_url='/login')
+def history(request):
+	history = VideoViews.objects.filter(viewer=request.user)
+	Allviews = VideoViews.objects.all()
+	user_subs = Subscription.objects.filter(subscribers=request.user)
+	profile = UserProfileInfo.objects.all()
+
+	context = {"video":history, "allviews":Allviews, 'subs_chnl':user_subs, 'chnl_pic':profile, "type":"history"}
+	return render(request,'youtube_app/like_and_history.html',context)
+
 
 def video(request,id):
 	vp = Video.objects.get(id=id)
 	comments = Comment.objects.filter(video_id=id)
 	likes = Like.objects.filter(video_id=id)
+	profile = UserProfileInfo.objects.all()
 
 	if request.user.is_authenticated:
 		views = VideoViews.objects.filter(viewer=request.user, video_id=vp)
@@ -130,50 +167,68 @@ def video(request,id):
 			addview = VideoViews.objects.create(viewer=request.user,video_id=vp)
 	
 	all_view = VideoViews.objects.filter(video_id=id)
+	user_subs = Subscription.objects.filter(channel_owner=vp.user)
 
-	context = {'video':vp, 'allcomments':comments, 'all_likes':likes, 'all_view':all_view}
+	context = {'video':vp, 'allcomments':comments, 'all_likes':likes, 'all_view':all_view, 'all_profile':profile, 'subs_chnl':user_subs}
 	
 	return render(request,'youtube_app/video.html',context)
 
 
 @login_required(login_url='/login')
+@api_view(['POST'])
 def add_comment(request):
 
-	jsn_data=json.loads(request.GET.get('comment', ''))
-	if jsn_data["comment"] != '':
+	if request.method == "POST":
+		if request.data["comments"] != '':
+			serializers = CommentSerializers(data=request.data)
+			if serializers.is_valid():
+				serializers.save()
+				
+			image = UserProfileInfo.objects.get(user=request.user).profile_photo
+
+			show_comment = {'fullname':request.user.get_full_name(),'comment':request.data["comments"],'profile':str(image.url)}
+			py_dict = json.dumps(show_comment)
+
+			return HttpResponse(py_dict)
+		else:
+			return HttpResponse("Please Type Something In The Comment Box")
 	
-		dp = UserProfileInfo.objects.get(user=request.user)
-		vi = Video.objects.get(pk=jsn_data["video_pk"])
-		addcomment = Comment.objects.create(commenter=request.user,commenter_dp=dp,video_id=vi,comments=jsn_data["comment"])
 
-		image = dp.profile_photo
-		show_comment = {'fullname':jsn_data["user"],'comment':jsn_data["comment"],'profile':str(image.url)}
-		py_dict = json.dumps(show_comment)
-
-		return HttpResponse(py_dict)
-	else:
-		return HttpResponse("Please Type Something In The Comment Box")
 
 @login_required(login_url='/login')
+@api_view(['POST'])
 def liked(request):
-	try:
-		jsn_data = json.loads(request.GET.get('data', ''))
+	if request.method == "POST":
+		serializers = LikeSerializers(data=request.data)
+		if serializers.is_valid():
+			serializers.save()
+			return HttpResponse("like is added")
+		else:
+			return HttpResponse("You have already like this video")
+		
 
-		vi = Video.objects.get(pk=jsn_data["video_pk"])
-		addlike = Like.objects.create(liker=request.user,video_id=vi,like=True)
-		
-		return HttpResponse("like is added")
-		
-	except IntegrityError as e:
-		return HttpResponse("you have already like this video")
+@login_required(login_url='/login')
+@api_view(['POST'])	
+def subscription(request):
+	if request.method == "POST":
+		serializers = SubscriptionSerializers(data=request.data)
+		if serializers.is_valid():
+			channel_name = User.objects.get(id=request.data['channel_owner'])
+			serializers.save()
+			return HttpResponse(f"You Subscribes {channel_name.get_full_name()}'s Channel")
+		else:
+			return HttpResponse("You have already subscribes this channel")
+
 		
 def search(request):
 	search_parameter = request.GET['search_query']
 	allvd = Video.objects.filter(video_title__startswith=search_parameter) | Video.objects.filter(user__first_name__startswith=search_parameter)
 	Allviews = VideoViews.objects.all()
 	result_list = list(allvd)
+	user_subs = Subscription.objects.filter(subscribers=request.user)
+	profile = UserProfileInfo.objects.all()
 
-	context = {'allvideos':result_list, 'allviews':Allviews}
+	context = {'allvideos':result_list, 'allviews':Allviews, 'subs_chnl':user_subs, 'chnl_pic':profile}
 	return render(request,'youtube_app/defaultvideo.html',context)
 
 

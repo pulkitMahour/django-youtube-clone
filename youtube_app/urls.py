@@ -12,6 +12,8 @@ urlpatterns = [
 	path('videosearch/',views.search,name='videosearch'),
 	path('likevideo/',views.liked,name='likevideo'),
 	path('addcomment/',views.add_comment,name='addcomment'),
-	path('yourchannel',views.your_channel,name='yourchannel'),
 	path('allchannel/<int:pk>/',views.all_channel,name='allchannel'),
+	path('likevideo_page/',views.likevideo_page,name='likevideo_page'),
+	path('history/',views.history,name='history'),
+	path('subscription/',views.subscription,name='subscription'),
 ]

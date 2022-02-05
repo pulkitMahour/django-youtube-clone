@@ -1,0 +1,62 @@
+{% load static %}
+<aside class="change_sidebar" id="side-menu">
+    <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse" style="display: block; overflow: scroll;">
+        <div class="position-sticky">
+            <div class="list-group list-group-flush mx-3 mt-4" style="margin-bottom: 0;">
+                <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i><img class="SiderIcon" src="{% static 'images/home-button_icon-icons.com_72700.png' %}"></i><h5>Home</h5></a>
+
+                <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i><img class="SiderIcon" src="{% static '/images/-explore_90032.png' %}"></i><h5>Explore</h5></a>
+
+                <a href="#" class="list-group-item list-group-item-action py-2 ripple" ><i><img class="SiderIcon" src="{% static '/images/youtube_subscription_icon_136007.png' %}"></i><h5>Subscription</h5></a>
+
+                <div class="youtubeSidebar__hr"></div>
+
+                <a href="#" class="list-group-item list-group-item-action py-2 ripple" ><i><img class="SiderIcon" src="{% static '/images/-video-library_90558.png' %}"></i><h5>Library</h5></a>
+
+                <a href="{% url 'history'%}" class="list-group-item list-group-item-action py-2 ripple" ><i><img class="SiderIcon" src="{% static '/images/history-clock-button_icon-icons.com_72701.png' %}"></i><h5>History</h5></a>
+
+                <a href="#" class="list-group-item list-group-item-action py-2 ripple" ><i><img class="SiderIcon" src="{% static '/images/iconfinder-video-camera-movie-multimedia-media-4593182_122268.png' %}"></i><h5>Your videos</h5></a>
+
+                <a href="#" class="list-group-item list-group-item-action py-2 ripple" ><i><img class="SiderIcon" src="{% static '/images/-watch-later_90421.png' %}"></i><h5>Watch later</h5></a>
+
+                <a href="{% url 'likevideo_page'%}" class="list-group-item list-group-item-action py-2 ripple" ><i><img class="SiderIcon" src="{% static '/images/3844426-approve-hand-like-thumb-up_110323.png' %}"></i><h5>Liked videos</h5></a>
+
+                <div class="youtubeSidebar__hr"></div>
+                <h4 style="background:white; margin: 0; padding-top: 10px; padding-bottom: 10px; padding-left: 8%;">SUBSCRIPTIONS</h4>
+                {% for s in subs_chnl %}
+                    {% for v in chnl_pic %}
+                        {% if s.channel_owner.id == v.user.id %}
+                            <a href="{% url 'allchannel' pk=s.channel_owner.pk %}" class="list-group-item list-group-item-action py-2 ripple" ><i><img class="SiderIcon" src="{{v.profile_photo.url}}" style="border-radius: 15px;"></i><h5>{{s.channel_owner.get_full_name}}</h5></a>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+
+                <div class="youtubeSidebar__hr"></div>
+
+                <a href="#" class="list-group-item list-group-item-action py-2 ripple" ><i><img class="SiderIcon" src="{% static '/images/YOUTUBE_icon-icons.com_65487.png' %}"></i><h5>YouTube Premium</h5></a>
+
+                <a href="#" class="list-group-item list-group-item-action py-2 ripple" ><i><img class="SiderIcon" src="{% static '/images/film_110981.png' %}"></i><h5>Films</h5></a>
+
+                <a href="#" class="list-group-item list-group-item-action py-2 ripple" ><i><img class="SiderIcon" src="{% static '/images/youtube_gaming_icon_137007.png' %}"></i><h5>Gaming</h5></a>
+
+                <a href="#" class="list-group-item list-group-item-action py-2 ripple" ><i><img class="SiderIcon" src="{% static '/images/iconfinder-youtubelivevideowebinarconference-3993869_112660.png' %}"></i><h5>Live</h5></a>
+
+                <a href="#" class="list-group-item list-group-item-action py-2 ripple" ><i><img class="SiderIcon" src="{% static '/images/hanger_121518.png' %}"></i><h5>Fashion & beauty</h5></a>
+
+                <a href="#" class="list-group-item list-group-item-action py-2 ripple" ><i><img class="SiderIcon" src="{% static '/images/black-light-bulb_icon-icons.com_57001.png' %}"></i><h5>Learning</h5></a>
+
+                <a href="#" class="list-group-item list-group-item-action py-2 ripple" ><i><img class="SiderIcon" src="{% static '/images/trophy_icon-icons.com_49969.png' %}"></i><h5>Sport</h5></a>
+
+                <div class="youtubeSidebar__hr"></div>
+
+                <a href="#" class="list-group-item list-group-item-action py-2 ripple" ><i><img class="SiderIcon" src="{% static '/images/3844439-gear-setting-settings-wheel_110294.png' %}"></i><h5>Setting</h5></a>
+
+                <a href="#" class="list-group-item list-group-item-action py-2 ripple" ><i><img class="SiderIcon" src="{% static '/images/flag-black-rectangular-tool-symbol-on-a-pole_icon-icons.com_54533.png' %}"></i><h5>Report history</h5></a>
+
+                <a href="#" class="list-group-item list-group-item-action py-2 ripple" ><i><img class="SiderIcon" src="{% static '/images/helpcircularbuttonofinterfacewithquestionmark_79843.png' %}"></i><h5>Help</h5></a>
+
+                <a href="#" class="list-group-item list-group-item-action py-2 ripple" ><i><img class="SiderIcon" src="{% static '/images/-feedback_90269.png' %}"></i><h5>Send feedback</h5></a>
+            </div>
+        </div>
+    </nav>
+</aside>

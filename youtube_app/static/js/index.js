@@ -1,12 +1,9 @@
-
 function savecomment(videopk,user,allcomments) {
 	var req = new XMLHttpRequest();
-	
+	const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 	var comment = document.getElementById('this_comment').value;
-
-	var data = JSON.stringify({"comment":comment,"video_pk":videopk,"user":user});
-
-	var url = "/addcomment?comment="+data
+	var data = JSON.stringify({"comments":comment,"video_id":videopk,"commenter":user});
+	var url = "/addcomment/"
 	
 	req.onreadystatechange = function () { 
 	    if (req.readyState == 4 && req.status == 200) {
@@ -23,20 +20,50 @@ function savecomment(videopk,user,allcomments) {
 	    						<b>'+jsn["fullname"]+'</b></h5><p>'+jsn["comment"]+'</p></div></div>';
 	    		
 	    		document.getElementById('allcomments').innerHTML = parseInt(allcomments)+1+" Comments"
-	        	
+	        	alert("Your Comment is Added")
 	        }
 	    }
 	}
-	req.open('GET',url, true);
-	req.send();
+	req.open('POST',url, true);
+	req.setRequestHeader("X-CSRFToken", csrftoken); 
+	req.setRequestHeader("Content-Type", "application/json"); 
+	req.send(data);
 	comment = document.getElementById('this_comment').value = '';
 }
 
 
-function addlike(videopk,likecount) {
+function subscribe(video_user_id, user_id){
+	var sub_btn = document.getElementById('subs_btn')
+	if (video_user_id === user_id){
+		sub_btn.style.pointerEvent = "none";
+	}
+	else{
+		var req = new XMLHttpRequest();
+		const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+		
+		var data = JSON.stringify({"subscribers":user_id,"channel_owner":video_user_id});
+		var url = "/subscription/"
+
+		req.onreadystatechange = function () {
+			if (req.readyState == 4 && req.status == 200) {
+				var jsonstring = req.responseText;
+				sub_btn.style.background = "gray";
+				alert(jsonstring);
+			}
+		}
+		req.open('POST',url, true);
+		req.setRequestHeader("X-CSRFToken", csrftoken); 
+		req.setRequestHeader("Content-Type", "application/json"); 
+		req.send(data);
+	}
+}
+
+
+function addlike(videopk,likecount,userid) {
 	var req = new XMLHttpRequest();
-	var data = JSON.stringify({"video_pk":videopk});
-	var url = "/likevideo?data="+data
+	const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+	var data = JSON.stringify({"video_id":videopk,"liker":userid,"like":true});
+	var url = "/likevideo/"
 
 	req.onreadystatechange = function () {
 		if (req.readyState == 4 && req.status == 200){
@@ -45,13 +72,16 @@ function addlike(videopk,likecount) {
 				alert(string);
 			}
 			else{
-				document.getElementById('all_likes').innerHTML = parseInt(likecount)+1
+				document.getElementById('all_likes').innerHTML = parseInt(likecount)+1;
+				alert(string);
 			}
 		}
 	}
 
-	req.open('GET',url,true);
-	req.send();
+	req.open('POST',url,true);
+	req.setRequestHeader("X-CSRFToken", csrftoken); 
+	req.setRequestHeader("Content-Type", "application/json");
+	req.send(data);
 }
 
 
@@ -67,7 +97,6 @@ function change() {
         video_distance.style.marginLeft="13.8%";
     }
 }
-
 
 var popup1 = document.getElementById("popup-1");
 var openPopup1 = document.getElementById("open-popup-1");

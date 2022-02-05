@@ -20,6 +20,7 @@ class Video(models.Model):
 	video_desc = models.TextField()
 	video = models.FileField(upload_to="videos")
 	channel_thumbnail = models.ForeignKey(UserProfileInfo,on_delete=models.CASCADE,null=True)
+	added_time = models.DateTimeField(default=timezone.now)
 
 	def __str__(self):
 		return self.video_title
@@ -46,11 +47,24 @@ class Like(models.Model):
 
 class Comment(models.Model):
 	commenter = models.ForeignKey(User,on_delete=models.CASCADE)
-	commenter_dp = models.ForeignKey(UserProfileInfo,on_delete=models.CASCADE)
 	video_id = models.ForeignKey(Video,on_delete=models.CASCADE)
 	comments = models.TextField()
 	commented_time = models.DateTimeField(default=timezone.now)
 
 	def __str__(self):
 		return f"{self.commenter.username}|{self.video_id.video_title}"
+
+class Subscription(models.Model):
+	channel_owner = models.ForeignKey(User,on_delete=models.CASCADE, related_name='owner')
+	subscribers = models.ForeignKey(User,on_delete=models.CASCADE, related_name='follower')
+	subscribe_date = models.DateTimeField(default=timezone.now)
+
+	class Meta:
+		unique_together = ["channel_owner", "subscribers"]
+
+	def __str__(self):
+		return f"{self.channel_owner.username}|{self.subscribers.username}"
+
+
+	
 

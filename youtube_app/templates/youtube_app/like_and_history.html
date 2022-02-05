@@ -1,0 +1,41 @@
+{% extends "youtube_app/base.html" %}
+{% load static %}
+{% load myfilters %}
+{% block body_block %}
+{% include 'youtube_app/sidebar.html' %}
+<div style="display: flex; flex-direction: row;">
+    <div style="margin-left: 15%; height: 754px; width: 19%; margin-top: 1%; position: fixed;">
+        {% if type == "liked" %}
+        <h2>Liked videos</h2>
+        {% elif type == "history" %}
+        <h2>History</h2>
+        {% endif %}
+        <h5 style="border-bottom: 1px solid lightgray; padding-bottom: 6%;">{{video.count}} videos</h5>
+        {% for i in chnl_pic %}
+            {% if i.user == request.user %}
+                <a style="display: flex;" href="{% url 'allchannel' pk=user.pk %}"><img class= channelThumbnail src="{{i.profile_photo.url}}"><p style="margin-top: 26px;" class= channelName >{{i.user.get_full_name}}</p></a>
+
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div id="visec" class="videoSection" style="display: flex;flex-direction: column; margin-left: 35%; width: 62%; background: white;">
+        <ol>
+        {% for videos in video %}
+            <li><div class="youtubeVideo" style="display: -webkit-inline-box; height: 1%; width: 180px; padding: 5px;">
+                <a href="{% url 'video' videos.id %}">
+                <img class= videoThumbnail src ="{{videos.video_id.video_thumbnail.url}}">
+                </a>
+                 <div class= videoDetails style="width: 400%" >
+                    <div class= videoDetailsText >
+                    	<p class= videoTitle >{{videos.video_id.video_title}}</p>
+                   		<p class= channelName >{{videos.video_id.user.get_full_name}}</p>
+                   	</div>
+                  </div>
+            </div></li>
+            <div class="youtubeSidebar__hr" style="width: 95%; margin: 1% "></div>
+        {% endfor %}
+        </ol>
+    </div>
+</div>
+
+{% endblock %}
