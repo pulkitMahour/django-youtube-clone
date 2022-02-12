@@ -1,8 +1,8 @@
-function savecomment(videopk,user,allcomments) {
+function savecomment(videopk,allcomments) {
 	var req = new XMLHttpRequest();
 	const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 	var comment = document.getElementById('this_comment').value;
-	var data = JSON.stringify({"comments":comment,"video_id":videopk,"commenter":user});
+	var data = JSON.stringify({"comments":comment,"video_id":videopk});
 	var url = "/addcomment/"
 	
 	req.onreadystatechange = function () { 
@@ -32,56 +32,82 @@ function savecomment(videopk,user,allcomments) {
 }
 
 
-function subscribe(video_user_id, user_id){
+function subscribe(video_user_id, subcount){
 	var sub_btn = document.getElementById('subs_btn')
-	if (video_user_id === user_id){
-		sub_btn.style.pointerEvent = "none";
+	
+	const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+	var dataa = JSON.stringify({"channel_owner":video_user_id});
+	$.ajax({
+	type: "POST",
+	url: "/subscription/",
+	headers: {'X-CSRFToken': csrftoken},
+	data: dataa,
+	contentType: 'application/json',
+	success: function (result) {
+		sub_btn.style.background = "gray";
+		sub_btn.innerHTML = "SUBSCRIBED"
+		document.getElementById('subcount').innerHTML = parseInt(subcount)+1+" subscribers";
+		alert(result["response"]);
+	},
+	error: function(result){
+		alert(result.responseText);
 	}
-	else{
-		var req = new XMLHttpRequest();
-		const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-		
-		var data = JSON.stringify({"subscribers":user_id,"channel_owner":video_user_id});
-		var url = "/subscription/"
-
-		req.onreadystatechange = function () {
-			if (req.readyState == 4 && req.status == 200) {
-				var jsonstring = req.responseText;
-				sub_btn.style.background = "gray";
-				alert(jsonstring);
-			}
-		}
-		req.open('POST',url, true);
-		req.setRequestHeader("X-CSRFToken", csrftoken); 
-		req.setRequestHeader("Content-Type", "application/json"); 
-		req.send(data);
-	}
+	});
+	
 }
 
-
-function addlike(videopk,likecount,userid) {
-	var req = new XMLHttpRequest();
+function addlike(videopk,likecount,action,lkornot) {
 	const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-	var data = JSON.stringify({"video_id":videopk,"liker":userid,"like":true});
-	var url = "/likevideo/"
-
-	req.onreadystatechange = function () {
-		if (req.readyState == 4 && req.status == 200){
-			var string = req.responseText;
-			if (string === "you have already like this video") {
-				alert(string);
-			}
-			else{
+	alert(lkornot)
+	if (action === "add"){
+		var dataa = JSON.stringify({"video_id":videopk,"like":true});
+		$.ajax({
+			type: "POST",
+			url: "/likevideo/",
+			headers: {'X-CSRFToken': csrftoken},
+			data: dataa,
+			contentType: 'application/json',
+			success: function (result) {
 				document.getElementById('all_likes').innerHTML = parseInt(likecount)+1;
-				alert(string);
+				document.getElementById('like_add').style.fill = "blue";
+				alert(result["added"]);
+			},
+			error: function(result){
+				alert(result.responseText);
 			}
-		}
+		});
 	}
 
-	req.open('POST',url,true);
-	req.setRequestHeader("X-CSRFToken", csrftoken); 
-	req.setRequestHeader("Content-Type", "application/json");
-	req.send(data);
+	else{
+		if(lkornot === "True"){
+			var dataa = JSON.stringify({"video_id":videopk,"like":"False"});
+		}
+		else{
+			var dataa = JSON.stringify({"video_id":videopk,"like":"True"});
+		}
+		$.ajax({
+			type: "PUT",
+			url: "/likevideo/",
+			headers: {'X-CSRFToken': csrftoken},
+			data: dataa,
+			contentType: 'application/json',
+			success: function (result) {
+				if (result["added"] === "like is added"){
+					document.getElementById('all_likes').innerHTML = parseInt(likecount)+1;
+					document.getElementById('like_change').style.fill = "blue";
+					alert(result["added"]);
+				}
+				else{
+					document.getElementById('all_likes').innerHTML = parseInt(likecount)-1;
+					document.getElementById('like_remove').style.fill = "black";
+					alert(result["added"]);
+				}
+			},
+			error: function(result){
+				alert(result.responseText);
+			}
+		});
+	}
 }
 
 

@@ -23,14 +23,25 @@
         {% for videos in video %}
             <li><div class="youtubeVideo" style="display: -webkit-inline-box; height: 1%; width: 180px; padding: 5px;">
                 <a href="{% url 'video' videos.id %}">
-                <img class= videoThumbnail src ="{{videos.video_id.video_thumbnail.url}}">
-                </a>
-                 <div class= videoDetails style="width: 400%" >
-                    <div class= videoDetailsText >
-                    	<p class= videoTitle >{{videos.video_id.video_title}}</p>
-                   		<p class= channelName >{{videos.video_id.user.get_full_name}}</p>
-                   	</div>
-                  </div>
+                    {% if type == "liked" %}
+                        <img class= videoThumbnail src ="{{videos.video_id.video_thumbnail.url}}">
+                        </a>
+                        <div class= videoDetails style="width: 400%" >
+                            <div class= videoDetailsText >
+                            	<p class= videoTitle >{{videos.video_id.video_title}}</p>
+                           		<p class= channelName >{{videos.video_id.user.get_full_name}}</p>
+                           	</div>
+                        </div>
+                    {% else %}
+                        <img class= videoThumbnail src ="{{videos.video_thumbnail.url}}">
+                        </a>
+                        <div class= videoDetails style="width: 400%" >
+                            <div class= videoDetailsText >
+                                <p class= videoTitle >{{videos.video_title}}</p>
+                                <p class= channelName >{{videos.user.get_full_name}}</p>
+                            </div>
+                        </div>
+                    {% endif %}
             </div></li>
             <div class="youtubeSidebar__hr" style="width: 95%; margin: 1% "></div>
         {% endfor %}

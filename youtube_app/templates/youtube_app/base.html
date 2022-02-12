@@ -18,6 +18,9 @@
   </head>
   <body>
     <div>
+        {% if messages %} {% for msg in messages %}
+            <div class="alert alert-{{msg.tags}}" role="alert">{{msg}}</div>
+        {% endfor %} {% endif %}
     <nav class="navbar navbar-default" role="navigation" style="height: 60px; margin-bottom: 0; background: white; border: none;">
         <div class="container-fluid" style="padding-left: 0">
             <ul class="nav navbar-nav">
@@ -34,8 +37,8 @@
                 <div class="youtubesearch">
                 <li>
                     <form method="get" action="{% url 'videosearch' %}" class="form-inline md-form mr-auto mb-4" style="margin-top: 10px; display: flex;">
-                        <input id="Search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width: 92%; height:40px; font-size: large;" name="search_query">
-                        <input id="searchbutton" class="form-control me-2" type="image" src="{% static '/images/search-interface-symbol_icon-icons.com_73166.png' %}" style="height: 40px; width: auto;">
+                        <input id="Search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width: 92%; height:40px; font-size: large; border-radius: 0;" name="search_query">
+                        <input id="searchbutton" class="form-control me-2" type="image" src="{% static '/images/search-interface-symbol_icon-icons.com_73166.png' %}" style="height: 40px; width: auto; border-radius: 0; background: gainsboro;">
                     </form>
                 </li>
                 </div>

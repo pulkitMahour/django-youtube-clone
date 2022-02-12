@@ -1,6 +1,7 @@
 from django.urls import path
 from django.conf.urls import url
 from . import views
+from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
 	path('',views.base,name='base'),
@@ -16,4 +17,5 @@ urlpatterns = [
 	path('likevideo_page/',views.likevideo_page,name='likevideo_page'),
 	path('history/',views.history,name='history'),
 	path('subscription/',views.subscription,name='subscription'),
+	path('subscription_page/',views.subscription_page,name='subscription_page'),
 ]
