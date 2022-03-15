@@ -41,8 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap3',
     'rest_framework',
+    'django_celery_beat',
+    'django_celery_results',
     'youtube_app',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -87,25 +90,42 @@ WSGI_APPLICATION = 'youtube_project.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+#     'default' : {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME' : 'youtube_clone_django',
+#         'USER' : 'root',
+#         'HOST' : 'localhost',
+#         'PASSWORD' : 'tjwff7xdxc',
+#         'PORT' : '3306'
+#     }
+# }
+
 DATABASES = {
     'default' : {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME' : 'youtube_clone_django',
-        'USER' : 'root',
+        'USER' : 'postgres',
         'HOST' : 'localhost',
         'PASSWORD' : 'tjwff7xdxc',
-        'PORT' : '3306'
+        'PORT' : '5432'
     }
 }
-# DATABASES['default'] = dj_database_url.config(
-#     default='mysql://root:tjwff7xdxc@127.0.0.1:3306/youtube_clone_django',
-# )
+
+# DATABASES['default'] =  dj_database_url.config()
+
+# try:
+#   from local_settings import *
+# except Exception as e:
+#   pass
+
 # db_from_env = dj_database_url.config(conn_max_age=500)
 # DATABASES['default'].update(db_from_env)
 
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -152,3 +172,27 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Kolkata'
+
+CELERY_RESULT_BACKEND ='django-db'
+
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_USE_TLS = True
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_HOST_USER ='pulkitmahour15jan@gmail.com'
+EMAIL_HOST_PASSWORD = "detznqejmuonmeqv"
+DEFAULT_FROM_EMAIL = 'Celery <pulkitmahour15jan@gmail.com>'
+
+
+
+

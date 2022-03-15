@@ -1,10 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
-# Create your models here.
-
 
 class UserProfileInfo(models.Model):
+	# user = models.OneToOneField(User,on_delete=models.CASCADE,related_name=)
 	user = models.OneToOneField(User,on_delete=models.CASCADE)
 	age = models.IntegerField(null=True)
 	profile_photo = models.ImageField(upload_to='profile_photo',default='/round-account-button-with-user-inside_icon-icons.com_72596.png')
@@ -19,7 +18,6 @@ class Video(models.Model):
 	video_title = models.CharField(max_length=255)
 	video_desc = models.TextField()
 	video = models.FileField(upload_to="videos")
-	channel_thumbnail = models.ForeignKey(UserProfileInfo,on_delete=models.CASCADE,null=True)
 	added_time = models.DateTimeField(default=timezone.now)
 
 	def __str__(self):

@@ -36,7 +36,7 @@ function subscribe(video_user_id, subcount){
 	var sub_btn = document.getElementById('subs_btn')
 	
 	const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-	var dataa = JSON.stringify({"channel_owner":video_user_id});
+	var dataa = JSON.stringify({"channel_owner":video_user_id, "count":parseInt(subcount)+1});
 	$.ajax({
 	type: "POST",
 	url: "/subscription/",
@@ -47,7 +47,7 @@ function subscribe(video_user_id, subcount){
 		sub_btn.style.background = "gray";
 		sub_btn.innerHTML = "SUBSCRIBED"
 		document.getElementById('subcount').innerHTML = parseInt(subcount)+1+" subscribers";
-		alert(result["response"]);
+		alert(result);
 	},
 	error: function(result){
 		alert(result.responseText);
@@ -55,10 +55,53 @@ function subscribe(video_user_id, subcount){
 	});
 	
 }
+var counter = 'http://127.0.0.1:8000/loadmore/'
+function loadmore(){
+	var load_more = document.getElementById('load_more')
+	$.ajax({
+	type: "GET",
+	url: counter,
+	beforeSend:function(){
+		$("#load_more").attr('disabled','disabled').text('Loading..');
+	},
+	success: function (result) {
+		var _html='';
+		$.each(result.results, function(key, value) {
+			_html += '<div class="col-lg-3 col-md-4 col-sm-6" style="position: static; padding-right: 5px; padding-left: 5px;">\
+        			<div class="youtubeVideo">\
+            			<a href="/video/'+String(value["id"])+'/">\
+            				<img class= videoThumbnail src ="'+value["video_thumbnail"]+'">\
+            			</a>\
+             			<div class= videoDetails >\
+                			<a href="/allchannel/'+value["user"]+'/">\
+                				<img class= channelThumbnail src="'+value["channel_photo"]+'">\
+                			</a>\
+                			<div class= videoDetailsText >\
+			                	<p class= videoTitle >'+value["video_title"]+'</p>\
+			               		<p class= channelName >'+value["channel_name"]+'</p>\
+			               		<p class= videoViews >'+value["view_time_since"]+'</p>\
+               				</div>\
+              			</div>\
+        			</div>\
+    			</div>'
+		})
+		$(".columncount").append(_html);
+		$("#load_more").removeAttr('disabled').text('Load More');
+		if (result['next'] === null) {
+			load_more.style.display = "none";
+		}
+		counter = result["next"];
+	},
+	error: function(result){
+		alert(result);
+	}
+	});
+}
+
+loadmore()
 
 function addlike(videopk,likecount,action,lkornot) {
 	const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-	alert(lkornot)
 	if (action === "add"){
 		var dataa = JSON.stringify({"video_id":videopk,"like":true});
 		$.ajax({
@@ -70,10 +113,10 @@ function addlike(videopk,likecount,action,lkornot) {
 			success: function (result) {
 				document.getElementById('all_likes').innerHTML = parseInt(likecount)+1;
 				document.getElementById('like_add').style.fill = "blue";
-				alert(result["added"]);
+				alert(result);
 			},
 			error: function(result){
-				alert(result.responseText);
+				alert(result);
 			}
 		});
 	}
@@ -95,16 +138,16 @@ function addlike(videopk,likecount,action,lkornot) {
 				if (result["added"] === "like is added"){
 					document.getElementById('all_likes').innerHTML = parseInt(likecount)+1;
 					document.getElementById('like_change').style.fill = "blue";
-					alert(result["added"]);
+					alert(result);
 				}
 				else{
 					document.getElementById('all_likes').innerHTML = parseInt(likecount)-1;
 					document.getElementById('like_remove').style.fill = "black";
-					alert(result["added"]);
+					alert(result);
 				}
 			},
 			error: function(result){
-				alert(result.responseText);
+				alert(result);
 			}
 		});
 	}

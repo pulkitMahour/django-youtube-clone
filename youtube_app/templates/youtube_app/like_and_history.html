@@ -11,12 +11,7 @@
         <h2>History</h2>
         {% endif %}
         <h5 style="border-bottom: 1px solid lightgray; padding-bottom: 6%;">{{video.count}} videos</h5>
-        {% for i in chnl_pic %}
-            {% if i.user == request.user %}
-                <a style="display: flex;" href="{% url 'allchannel' pk=user.pk %}"><img class= channelThumbnail src="{{i.profile_photo.url}}"><p style="margin-top: 26px;" class= channelName >{{i.user.get_full_name}}</p></a>
-
-            {% endif %}
-        {% endfor %}
+        <a style="display: flex;" href="{% url 'allchannel' pk=user.pk %}"><img class= channelThumbnail src="{{request.user.userprofileinfo.profile_photo.url}}"><p style="margin-top: 26px;" class= channelName >{{request.user.get_full_name}}</p></a>
     </div>
     <div id="visec" class="videoSection" style="display: flex;flex-direction: column; margin-left: 35%; width: 62%; background: white;">
         <ol>

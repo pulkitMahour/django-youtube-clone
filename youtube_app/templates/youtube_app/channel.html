@@ -48,7 +48,7 @@
         	<img class= videoThumbnail src ="{{videos.video_thumbnail.url}}">
         	</a>
          	<div class= videoDetails >
-            	<a href="{% url 'allchannel' pk=videos.user.pk %}"><img class= channelThumbnail src="{{videos.channel_thumbnail.profile_photo.url}}"></a>
+            	<a href="{% url 'allchannel' pk=videos.user.pk %}"><img class= channelThumbnail src="{{videos.user.userprofileinfo.profile_photo.url}}"></a>
             	<div class= videoDetailsText >
             		<p class= videoTitle >{{videos.video_title}}</p>
            			<p class= channelName >{{videos.user.get_full_name}}</p>

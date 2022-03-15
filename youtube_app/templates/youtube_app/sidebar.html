@@ -27,11 +27,7 @@
                 <div class="youtubeSidebar__hr"></div>
                 <h4 style="background:white; margin: 0; padding-top: 10px; padding-bottom: 10px; padding-left: 8%;">SUBSCRIPTIONS</h4>
                 {% for s in subs_chnl %}
-                    {% for v in chnl_pic %}
-                        {% if s.channel_owner.id == v.user.id %}
-                            <a href="{% url 'allchannel' pk=s.channel_owner.pk %}" class="list-group-item list-group-item-action py-2 ripple" ><i><img class="SiderIcon" src="{{v.profile_photo.url}}" style="border-radius: 15px;"></i><h5>{{s.channel_owner.get_full_name}}</h5></a>
-                        {% endif %}
-                    {% endfor %}
+                    <a href="{% url 'allchannel' pk=s.channel_owner.pk %}" class="list-group-item list-group-item-action py-2 ripple" ><i><img class="SiderIcon" src="{{s.channel_owner.userprofileinfo.profile_photo.url}}" style="border-radius: 15px;"></i><h5>{{s.channel_owner.get_full_name}}</h5></a>
                 {% endfor %}
 
                 <div class="youtubeSidebar__hr"></div>

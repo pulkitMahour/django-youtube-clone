@@ -70,7 +70,7 @@
         <div style="overflow: auto;">
             <div style="float: left;">
                 <a href="{% url 'allchannel' pk=video.user.pk %}">
-                    <img style="border-radius: 200px; height: 45px;" src="{{video.channel_thumbnail.profile_photo.url}}">
+                    <img style="border-radius: 200px; height: 45px;" src="{{video.user.userprofileinfo.profile_photo.url}}">
                 </a>
             </div>
             <div style="margin-left: 10px; float: left;">
@@ -112,11 +112,7 @@
         {% for c in allcomments %}
         <div style="display: flex;">
             <div>
-                {% for a in all_profile %}
-                    {% if a.user == c.commenter %}
-                        <img class= channelThumbnail src="{{a.profile_photo.url}}" style="margin-top: 9px;">
-                    {% endif %}
-                {% endfor %}
+                <img class= channelThumbnail src="{{c.commenter.userprofileinfo.profile_photo.url}}" style="margin-top: 9px;">
             </div>
             <div style="margin-left: 1%;">
                 <div style="display: flex;">

@@ -5,26 +5,12 @@
 {% include 'youtube_app/sidebar.html' %}
 <div id="visec" class="videoSection">
     <div class="container-fluid">
-    <div class="row" style="margin: 0;">
-    {% for videos in allvideos %}
-    <div class="col-lg-3 col-md-4 col-sm-6" style="position: static; padding-right: 5px; padding-left: 5px;">
-        <div class="youtubeVideo">
-            <a href="{% url 'video' videos.id %}">
-            <img class= videoThumbnail src ="{{videos.video_thumbnail.url}}">
-            </a>
-             <div class= videoDetails >
-                <a href="{% url 'allchannel' pk=videos.user.pk %}"><img class= channelThumbnail src="{{videos.channel_thumbnail.profile_photo.url}}"></a>
-                <div class= videoDetailsText >
-                	<p class= videoTitle >{{videos.video_title}}</p>
-               		<p class= channelName >{{videos.user.get_full_name}}</p>
-               		<p class= videoViews >{{allviews|filter_view:videos.id}} Views · {{ videos.added_time|timesince}} ago</p>
-               	</div>
-              </div>
-        </div>
+    <div class="row columncount" style="margin: 0;">
     </div>
-    {% endfor %}
-    </div>
+    <div><button id="load_more" onclick = "loadmore()">Load More</button></div>
     </div>
 </div>
 
 {% endblock %}
+
+
