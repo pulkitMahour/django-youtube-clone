@@ -104,19 +104,12 @@ WSGI_APPLICATION = 'youtube_project.wsgi.application'
 DATABASES = {
     'default' : {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        
+        'NAME': 'postgresql',
     }
 }
 
-# DATABASES['default'] =  dj_database_url.config()
-
-# try:
-#   from local_settings import *
-# except Exception as e:
-#   pass
-
-# db_from_env = dj_database_url.config(conn_max_age=500)
-# DATABASES['default'].update(db_from_env)
+DATABASE_URL = 'postgresql://<postgresql>'
+DATABASES = {'default': dj_database_url.config(default=DATABASE_URL)}
 
 
 # Password validation
