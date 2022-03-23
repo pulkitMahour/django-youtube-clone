@@ -104,11 +104,7 @@ WSGI_APPLICATION = 'youtube_project.wsgi.application'
 DATABASES = {
     'default' : {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME' : 'youtube_clone_django',
-        'USER' : 'postgres',
-        'HOST' : 'localhost',
-        'PASSWORD' : 'tjwff7xdxc',
-        'PORT' : '5432'
+        
     }
 }
 
