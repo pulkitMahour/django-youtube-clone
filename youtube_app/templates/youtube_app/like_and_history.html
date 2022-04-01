@@ -3,8 +3,8 @@
 {% load myfilters %}
 {% block body_block %}
 {% include 'youtube_app/sidebar.html' %}
-<div style="display: flex; flex-direction: row;">
-    <div style="margin-left: 15%; height: 754px; width: 19%; margin-top: 1%; position: fixed;">
+<div id="visec" style="display: flex; flex-direction: row; margin-left: 13.8%; width: 100%;">
+    <div style="height: 754px; width: 18%; margin-top: 1%; position: fixed; margin-left: 1%;">
         {% if type == "liked" %}
         <h2>Liked videos</h2>
         {% elif type == "history" %}
@@ -13,7 +13,7 @@
         <h5 style="border-bottom: 1px solid lightgray; padding-bottom: 6%;">{{video.count}} videos</h5>
         <a style="display: flex;" href="{% url 'allchannel' pk=user.pk %}"><img class= channelThumbnail src="{{request.user.userprofileinfo.profile_photo.url}}"><p style="margin-top: 26px;" class= channelName >{{request.user.get_full_name}}</p></a>
     </div>
-    <div id="visec" class="videoSection" style="display: flex;flex-direction: column; margin-left: 35%; width: 62%; background: white;">
+    <div class="videoSection" style="display: flex;flex-direction: column; margin-left: 20%; width: 62%; background: white;">
         <ol>
         {% for videos in video %}
             <li><div class="youtubeVideo" style="display: -webkit-inline-box; height: 1%; width: 180px; padding: 5px;">
