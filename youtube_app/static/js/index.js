@@ -55,7 +55,7 @@ function subscribe(video_user_id, subcount){
 	});
 	
 }
-var counter = 'http://127.0.0.1:8000/loadmore/'
+var counter = '/loadmore/'
 function loadmore(){
 	var load_more = document.getElementById('load_more')
 	$.ajax({
