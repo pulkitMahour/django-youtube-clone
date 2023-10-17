@@ -27,8 +27,8 @@ SECRET_KEY = 'django-insecure-io%cdt3)co6lqy^)ogf4o72!qj7)qw4)852l#&=(q1%*m2pqi!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['django-youtube-clone.herokuapp.com','127.0.0.1']
-# ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['django-youtube-clone.herokuapp.com','127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -104,12 +104,16 @@ WSGI_APPLICATION = 'youtube_project.wsgi.application'
 DATABASES = {
     'default' : {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgresql',
+        'NAME' : 'youtube_clone_django',
+        'USER' : 'postgres',
+        'HOST' : 'localhost',
+        'PASSWORD' : 'tjwff7xdxc',
+        'PORT' : '5431'
     }
 }
 
-DATABASE_URL = 'postgresql://<postgresql>'
-DATABASES = {'default': dj_database_url.config(default=DATABASE_URL)}
+# DATABASE_URL = 'postgresql://<postgresql>'
+# DATABASES = {'default': dj_database_url.config(default=DATABASE_URL)}
 
 
 # Password validation
