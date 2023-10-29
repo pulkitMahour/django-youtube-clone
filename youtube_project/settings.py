@@ -100,15 +100,26 @@ WSGI_APPLICATION = 'youtube_project.wsgi.application'
 #         'PORT' : '3306'
 #     }
 # }
+# local postgres database
+# DATABASES = {
+#     'default' : {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME' : 'youtube_clone_django',
+#         'USER' : 'postgres',
+#         'HOST' : 'localhost',
+#         'PASSWORD' : 'tjwff7xdxc',
+#         'PORT' : '5431'
+#     }
+# }
 
 DATABASES = {
     'default' : {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME' : 'youtube_clone_django',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME' : 'railway',
         'USER' : 'postgres',
-        'HOST' : 'localhost',
-        'PASSWORD' : 'tjwff7xdxc',
-        'PORT' : '5431'
+        'HOST' : 'monorail.proxy.rlwy.net',
+        'PASSWORD' : '24-cG**36G4f*1af2E-DFDe*E11dGFfE',
+        'PORT' : '32107'
     }
 }
 
